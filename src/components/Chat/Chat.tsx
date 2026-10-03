@@ -3,6 +3,7 @@ import { checkAccount, sendMessage } from "../../api/greenApi"
 import MessageComposer from "../MessageComposer"
 import ChatMessage from "../ChatMessage"
 import PhoneForm from "../PhoneForm"
+import backArrow from "../../assets/back-arrow.svg"
 import { useNotifications } from "../../hooks/useNotifications"
 import "./Chat.scss"
 
@@ -115,7 +116,7 @@ const Chat = ({ idInstance, apiTokenInstance }: ChatProps) => {
   useNotifications(idInstance, apiTokenInstance, handleIncomingMessage)
 
   return (
-    <div className="chat">
+    <div className={`chat ${activeChat ? "chat--active" : ""}`}>
       <aside className="chat__sidebar">
         <div className="chat__sidebar-top">
           <div className="chat__sidebar-header">
@@ -159,6 +160,15 @@ const Chat = ({ idInstance, apiTokenInstance }: ChatProps) => {
         {activeChat && (
           <>
             <div className="chat__header">
+              <button
+                className="chat__back-button"
+                type="button"
+                onClick={() => setActiveChat(null)}
+                aria-label="Вернуться к списку чатов"
+              >
+                <img src={backArrow} alt="" />
+              </button>
+
               <h2 className="chat__title">{activeChat.phoneNumber}</h2>
             </div>
 

@@ -47,3 +47,9 @@
     color: #fff;
   }
 }
+
+@media (max-width: 925px) {
+  .message-composer {
+    width: calc(100% - 24px);
+  }
+}
