@@ -86,3 +86,59 @@ export const sendMessage = async (
 
   return response.json()
 }
+
+interface NotificationResponse {
+  receiptId: number
+  body: {
+    typeWebhook: string
+    idMessage: string
+    senderData?: {
+      chatId: string
+    }
+    messageData?: {
+      typeMessage: string
+      textMessageData?: {
+        textMessage: string
+      }
+    }
+  }
+}
+
+export const receiveNotification = async (
+  idInstance: string,
+  apiTokenInstance: string,
+): Promise<NotificationResponse | null> => {
+  const response = await fetch(
+    `${API_URL}/waInstance${idInstance}/receiveNotification/${apiTokenInstance}`,
+  )
+
+  if (!response.ok) {
+    throw new Error("Не удалось получить уведомление")
+  }
+
+  return response.json()
+}
+
+interface DeleteNotificationResponse {
+  result: boolean
+  reason: string
+}
+
+export const deleteNotification = async (
+  idInstance: string,
+  apiTokenInstance: string,
+  receiptId: number,
+): Promise<DeleteNotificationResponse> => {
+  const response = await fetch(
+    `${API_URL}/waInstance${idInstance}/deleteNotification/${apiTokenInstance}/${receiptId}`,
+    {
+      method: "DELETE",
+    },
+  )
+
+  if (!response.ok) {
+    throw new Error("Не удалось удалить уведомление")
+  }
+
+  return response.json()
+}

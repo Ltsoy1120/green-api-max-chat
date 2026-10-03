@@ -1,8 +1,9 @@
-import { useState } from "react"
+import { useCallback, useState } from "react"
 import { checkAccount, sendMessage } from "../../api/greenApi"
 import MessageComposer from "../MessageComposer"
 import ChatMessage from "../ChatMessage"
 import PhoneForm from "../PhoneForm"
+import { useNotifications } from "../../hooks/useNotifications"
 import "./Chat.scss"
 
 interface ActiveChat {
@@ -13,6 +14,7 @@ interface ActiveChat {
 interface Message {
   id: string
   text: string
+  direction: "incoming" | "outgoing"
 }
 
 interface ChatProps {
@@ -78,6 +80,7 @@ const Chat = ({ idInstance, apiTokenInstance }: ChatProps) => {
           {
             id: data.idMessage,
             text: message,
+            direction: "outgoing",
           },
         ],
       }))
@@ -85,6 +88,25 @@ const Chat = ({ idInstance, apiTokenInstance }: ChatProps) => {
       console.error("Не удалось отправить сообщение")
     }
   }
+
+  const handleIncomingMessage = useCallback(
+    (message: { id: string; chatId: string; text: string }) => {
+      setMessagesByChatId((prevMessages) => ({
+        ...prevMessages,
+        [message.chatId]: [
+          ...(prevMessages[message.chatId] || []),
+          {
+            id: message.id,
+            text: message.text,
+            direction: "incoming",
+          },
+        ],
+      }))
+    },
+    [],
+  )
+
+  useNotifications(idInstance, apiTokenInstance, handleIncomingMessage)
 
   return (
     <div className="chat">
@@ -136,7 +158,11 @@ const Chat = ({ idInstance, apiTokenInstance }: ChatProps) => {
 
             <div className="chat__messages">
               {(messagesByChatId[activeChat.chatId] || []).map((message) => (
-                <ChatMessage key={message.id} text={message.text} />
+                <ChatMessage
+                  key={message.id}
+                  text={message.text}
+                  direction={message.direction}
+                />
               ))}
             </div>
 
