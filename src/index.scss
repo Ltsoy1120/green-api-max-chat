@@ -30,6 +30,11 @@ p {
   margin: 0;
 }
 
+button,
+input {
+  font: inherit;
+}
+
 button {
   border: none;
   cursor: pointer;

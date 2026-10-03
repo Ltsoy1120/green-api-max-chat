@@ -1,4 +1,5 @@
 import { useState } from "react"
+import Chat from "./components/Chat"
 import CredentialsForm from "./components/CredentialsForm"
 import { getStateInstance } from "./api/greenApi"
 
@@ -39,7 +40,10 @@ function App() {
           onClearError={() => setError("")}
         />
       ) : (
-        <div>Chat</div>
+        <Chat
+          idInstance={credentials.idInstance}
+          apiTokenInstance={credentials.apiTokenInstance}
+        />
       )}
     </main>
   )

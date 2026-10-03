@@ -1,0 +1,114 @@
+.chat {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+
+  &__sidebar {
+    width: 393px;
+    background: #fff;
+    border-right: 1px solid #0c0d0e0f;
+  }
+
+  &__sidebar-top {
+    padding: 0 20px;
+    border-bottom: 1px solid #0c0d0e0f;
+  }
+
+  &__sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 65px;
+  }
+
+  &__sidebar-title {
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 28px;
+  }
+
+  &__add-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding-bottom: 6px;
+    border-radius: 50%;
+    background: #087eff;
+    color: #fff;
+    font-size: 24px;
+    font-weight: 300;
+  }
+
+  &__content {
+    position: relative;
+    flex: 1;
+    overflow: hidden;
+    background:
+      radial-gradient(
+        57.57% 53.61% at 94.4% 14.38%,
+        #0000 0%,
+        #0000 50%,
+        #0000 100%
+      ),
+      radial-gradient(
+        140.37% 51.38% at 0% 80.05%,
+        #0000 0%,
+        #0000 50%,
+        #0000 100%
+      ),
+      linear-gradient(28deg, #99d5d7 8.03%, #80bcff 91.51%);
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+
+      background: #168cff;
+      mask-image: url("../../assets/pattern_space.svg");
+      mask-repeat: repeat;
+      mask-size: auto;
+
+      opacity: 0.35;
+      pointer-events: none;
+    }
+  }
+
+  &__header {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    height: 65px;
+    padding: 0 20px;
+    background: #fff;
+    border-bottom: 1px solid #e5e5e5;
+  }
+
+  &__title {
+    color: #060708;
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  &__list {
+    width: 100%;
+  }
+
+  &__item {
+    background: #fff;
+    display: block;
+    height: 82px;
+    width: 100%;
+    padding: 14px 20px;
+    text-align: left;
+
+    &--active {
+      background: #eaf3ff;
+    }
+
+    &:not(&--active):hover {
+      background: #0909090d;
+    }
+  }
+}

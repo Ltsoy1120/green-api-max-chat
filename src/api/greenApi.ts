@@ -24,3 +24,34 @@ export const getStateInstance = async (
 
   return response.json()
 }
+
+interface CheckAccountResponse {
+  exist: boolean
+  chatId: string
+  fromCache: boolean
+}
+
+export const checkAccount = async (
+  idInstance: string,
+  apiTokenInstance: string,
+  phoneNumber: string,
+): Promise<CheckAccountResponse> => {
+  const response = await fetch(
+    `${API_URL}/waInstance${idInstance}/checkAccount/${apiTokenInstance}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        phoneNumber: Number(phoneNumber),
+      }),
+    },
+  )
+
+  if (!response.ok) {
+    throw new Error("Не удалось проверить номер")
+  }
+
+  return response.json()
+}
