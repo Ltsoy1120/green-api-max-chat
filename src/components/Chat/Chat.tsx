@@ -1,12 +1,18 @@
 import { useState } from "react"
 import { checkAccount, sendMessage } from "../../api/greenApi"
 import MessageComposer from "../MessageComposer"
+import ChatMessage from "../ChatMessage"
 import PhoneForm from "../PhoneForm"
 import "./Chat.scss"
 
 interface ActiveChat {
   phoneNumber: string
   chatId: string
+}
+
+interface Message {
+  id: string
+  text: string
 }
 
 interface ChatProps {
@@ -19,6 +25,9 @@ const Chat = ({ idInstance, apiTokenInstance }: ChatProps) => {
   const [activeChat, setActiveChat] = useState<ActiveChat | null>(null)
   const [isPhoneFormOpen, setIsPhoneFormOpen] = useState(false)
   const [error, setError] = useState("")
+  const [messagesByChatId, setMessagesByChatId] = useState<
+    Record<string, Message[]>
+  >({})
 
   const handleCreateChat = async (phoneNumber: string) => {
     setError("")
@@ -62,7 +71,16 @@ const Chat = ({ idInstance, apiTokenInstance }: ChatProps) => {
         message,
       )
 
-      console.log("Сообщение отправлено:", data.idMessage)
+      setMessagesByChatId((prevMessages) => ({
+        ...prevMessages,
+        [activeChat.chatId]: [
+          ...(prevMessages[activeChat.chatId] || []),
+          {
+            id: data.idMessage,
+            text: message,
+          },
+        ],
+      }))
     } catch {
       console.error("Не удалось отправить сообщение")
     }
@@ -114,6 +132,12 @@ const Chat = ({ idInstance, apiTokenInstance }: ChatProps) => {
           <>
             <div className="chat__header">
               <h2 className="chat__title">{activeChat.phoneNumber}</h2>
+            </div>
+
+            <div className="chat__messages">
+              {(messagesByChatId[activeChat.chatId] || []).map((message) => (
+                <ChatMessage key={message.id} text={message.text} />
+              ))}
             </div>
 
             <MessageComposer onSubmit={handleSendMessage} />
