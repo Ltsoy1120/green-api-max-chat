@@ -1,19 +1,15 @@
 import { useState } from "react"
 import maxLogo from "../../assets/max-logo.png"
 import maxTitle from "../../assets/green-api-max.svg"
-import "./CredentialsForm.scss"
+import "./LoginForm.scss"
 
-interface CredentialsFormProps {
+interface LoginFormProps {
   error: string
   onClearError: () => void
   onSubmit: (idInstance: string, apiTokenInstance: string) => void
 }
 
-const CredentialsForm = ({
-  error,
-  onClearError,
-  onSubmit,
-}: CredentialsFormProps) => {
+const LoginForm = ({ error, onClearError, onSubmit }: LoginFormProps) => {
   const [idInstance, setIdInstance] = useState("")
   const [apiTokenInstance, setApiTokenInstance] = useState("")
 
@@ -27,15 +23,15 @@ const CredentialsForm = ({
   }
 
   return (
-    <div className="credentials-form">
-      <img className="credentials-form__logo" src={maxLogo} alt="MAX" />
-      <div className="credentials-form__card">
-        <h1 className="credentials-form__title">
+    <div className="login-form">
+      <img className="login-form__logo" src={maxLogo} alt="MAX" />
+      <div className="login-form__card">
+        <h1 className="login-form__title">
           <img src={maxTitle} alt="GREEN-API: MAX" />
         </h1>
 
-        <form className="credentials-form__form" onSubmit={handleSubmit}>
-          <label className="credentials-form__field">
+        <form className="login-form__form" onSubmit={handleSubmit}>
+          <label className="login-form__field">
             <span>idInstance</span>
             <input
               type="text"
@@ -47,7 +43,7 @@ const CredentialsForm = ({
             />
           </label>
 
-          <label className="credentials-form__field">
+          <label className="login-form__field">
             <span>apiTokenInstance</span>
             <input
               type="password"
@@ -59,10 +55,10 @@ const CredentialsForm = ({
             />
           </label>
 
-          <p className="credentials-form__error">{error}</p>
+          <p className="login-form__error">{error}</p>
 
           <button
-            className="credentials-form__button"
+            className="login-form__button"
             type="submit"
             disabled={isSubmitDisabled}
           >
@@ -74,4 +70,4 @@ const CredentialsForm = ({
   )
 }
 
-export default CredentialsForm
+export default LoginForm

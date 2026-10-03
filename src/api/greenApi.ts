@@ -55,3 +55,34 @@ export const checkAccount = async (
 
   return response.json()
 }
+
+interface SendMessageResponse {
+  idMessage: string
+}
+
+export const sendMessage = async (
+  idInstance: string,
+  apiTokenInstance: string,
+  chatId: string,
+  message: string,
+): Promise<SendMessageResponse> => {
+  const response = await fetch(
+    `${API_URL}/waInstance${idInstance}/sendMessage/${apiTokenInstance}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        chatId,
+        message,
+      }),
+    },
+  )
+
+  if (!response.ok) {
+    throw new Error("Не удалось отправить сообщение")
+  }
+
+  return response.json()
+}

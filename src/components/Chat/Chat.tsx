@@ -1,5 +1,6 @@
 import { useState } from "react"
-import { checkAccount } from "../../api/greenApi"
+import { checkAccount, sendMessage } from "../../api/greenApi"
+import MessageComposer from "../MessageComposer"
 import PhoneForm from "../PhoneForm"
 import "./Chat.scss"
 
@@ -48,6 +49,25 @@ const Chat = ({ idInstance, apiTokenInstance }: ChatProps) => {
     }
   }
 
+  const handleSendMessage = async (message: string) => {
+    if (!activeChat) {
+      return
+    }
+
+    try {
+      const data = await sendMessage(
+        idInstance,
+        apiTokenInstance,
+        activeChat.chatId,
+        message,
+      )
+
+      console.log("Сообщение отправлено:", data.idMessage)
+    } catch {
+      console.error("Не удалось отправить сообщение")
+    }
+  }
+
   return (
     <div className="chat">
       <aside className="chat__sidebar">
@@ -91,9 +111,13 @@ const Chat = ({ idInstance, apiTokenInstance }: ChatProps) => {
 
       <section className="chat__content">
         {activeChat && (
-          <div className="chat__header">
-            <h2 className="chat__title">{activeChat.phoneNumber}</h2>
-          </div>
+          <>
+            <div className="chat__header">
+              <h2 className="chat__title">{activeChat.phoneNumber}</h2>
+            </div>
+
+            <MessageComposer onSubmit={handleSendMessage} />
+          </>
         )}
       </section>
     </div>

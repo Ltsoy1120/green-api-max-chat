@@ -1,4 +1,4 @@
-.credentials-form {
+.login-form {
   align-items: center;
   background: #fff;
   display: flex;
@@ -12,7 +12,7 @@
     max-width: 500px;
   }
 
-  &__logo {
+  &__ingo {
     width: 220px;
     height: 220px;
     object-fit: contain;
@@ -82,7 +82,7 @@
 }
 
 @media (max-width: 768px) {
-  .credentials-form {
+  .login-form {
     flex-direction: column;
     gap: 32px;
 

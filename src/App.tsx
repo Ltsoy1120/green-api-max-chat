@@ -1,6 +1,6 @@
 import { useState } from "react"
 import Chat from "./components/Chat"
-import CredentialsForm from "./components/CredentialsForm"
+import LoginForm from "./components/LoginForm"
 import { getStateInstance } from "./api/greenApi"
 
 interface Credentials {
@@ -34,7 +34,7 @@ function App() {
   return (
     <main>
       {!credentials ? (
-        <CredentialsForm
+        <LoginForm
           error={error}
           onSubmit={handleLogin}
           onClearError={() => setError("")}
