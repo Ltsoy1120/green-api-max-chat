@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react"
+import { useCallback, useState, useRef, useEffect } from "react"
 import { checkAccount, sendMessage } from "../../api/greenApi"
 import MessageComposer from "../MessageComposer"
 import ChatMessage from "../ChatMessage"
@@ -30,6 +30,12 @@ const Chat = ({ idInstance, apiTokenInstance }: ChatProps) => {
   const [messagesByChatId, setMessagesByChatId] = useState<
     Record<string, Message[]>
   >({})
+  const messagesEndRef = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({
+      behavior: "smooth",
+    })
+  }, [messagesByChatId, activeChat])
 
   const handleCreateChat = async (phoneNumber: string) => {
     setError("")
@@ -156,14 +162,18 @@ const Chat = ({ idInstance, apiTokenInstance }: ChatProps) => {
               <h2 className="chat__title">{activeChat.phoneNumber}</h2>
             </div>
 
-            <div className="chat__messages">
-              {(messagesByChatId[activeChat.chatId] || []).map((message) => (
-                <ChatMessage
-                  key={message.id}
-                  text={message.text}
-                  direction={message.direction}
-                />
-              ))}
+            <div className="chat__scroll">
+              <div className="chat__messages">
+                {(messagesByChatId[activeChat.chatId] || []).map((message) => (
+                  <ChatMessage
+                    key={message.id}
+                    text={message.text}
+                    direction={message.direction}
+                  />
+                ))}
+
+                <div ref={messagesEndRef} />
+              </div>
             </div>
 
             <MessageComposer onSubmit={handleSendMessage} />
