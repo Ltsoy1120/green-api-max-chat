@@ -18,3 +18,7 @@ npm run dev
 После запуска приложение будет доступно по адресу `http://localhost:5173`.
 
 Для работы необходимо создать и авторизовать MAX-инстанс GREEN-API, затем ввести `idInstance` и `apiTokenInstance` в форме входа.
+
+## Демо
+
+https://green-api-max-chat-zeta.vercel.app
