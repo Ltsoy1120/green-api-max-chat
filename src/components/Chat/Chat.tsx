@@ -1,13 +1,13 @@
-import { useCallback, useState, useRef, useEffect } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { checkAccount, sendMessage } from "../../api/greenApi"
-import MessageComposer from "../MessageComposer"
-import ChatMessage from "../ChatMessage"
-import PhoneForm from "../PhoneForm"
-import backArrow from "../../assets/back-arrow.svg"
 import { useNotifications } from "../../hooks/useNotifications"
+import backArrow from "../../assets/back-arrow.svg"
+import ChatMessage from "../ChatMessage"
+import MessageComposer from "../MessageComposer"
+import PhoneForm from "../PhoneForm"
 import "./Chat.scss"
 
-interface ActiveChat {
+interface ChatItem {
   phoneNumber: string
   chatId: string
 }
@@ -24,14 +24,16 @@ interface ChatProps {
 }
 
 const Chat = ({ idInstance, apiTokenInstance }: ChatProps) => {
-  const [chats, setChats] = useState<ActiveChat[]>([])
-  const [activeChat, setActiveChat] = useState<ActiveChat | null>(null)
+  const [chats, setChats] = useState<ChatItem[]>([])
+  const [isLoading, setIsLoading] = useState(false)
+  const [activeChat, setActiveChat] = useState<ChatItem | null>(null)
   const [isPhoneFormOpen, setIsPhoneFormOpen] = useState(false)
   const [error, setError] = useState("")
   const [messagesByChatId, setMessagesByChatId] = useState<
     Record<string, Message[]>
   >({})
   const messagesEndRef = useRef<HTMLDivElement>(null)
+
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({
       behavior: "smooth",
@@ -40,6 +42,8 @@ const Chat = ({ idInstance, apiTokenInstance }: ChatProps) => {
 
   const handleCreateChat = async (phoneNumber: string) => {
     setError("")
+    setIsLoading(true)
+
     try {
       const data = await checkAccount(idInstance, apiTokenInstance, phoneNumber)
 
@@ -64,6 +68,8 @@ const Chat = ({ idInstance, apiTokenInstance }: ChatProps) => {
       }
     } catch {
       setError("Не удалось проверить номер")
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -135,6 +141,7 @@ const Chat = ({ idInstance, apiTokenInstance }: ChatProps) => {
           {isPhoneFormOpen && (
             <PhoneForm
               error={error}
+              isLoading={isLoading}
               onPhoneChange={() => setError("")}
               onSubmit={handleCreateChat}
             />

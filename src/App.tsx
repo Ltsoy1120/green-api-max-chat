@@ -1,19 +1,23 @@
 import { useState } from "react"
+import { getStateInstance } from "./api/greenApi"
 import Chat from "./components/Chat"
 import LoginForm from "./components/LoginForm"
-import { getStateInstance } from "./api/greenApi"
 
-interface Credentials {
+interface GreenApiCredentials {
   idInstance: string
   apiTokenInstance: string
 }
 
 function App() {
-  const [credentials, setCredentials] = useState<Credentials | null>(null)
+  const [credentials, setCredentials] = useState<GreenApiCredentials | null>(
+    null,
+  )
   const [error, setError] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleLogin = async (idInstance: string, apiTokenInstance: string) => {
     setError("")
+    setIsLoading(true)
 
     try {
       const data = await getStateInstance(idInstance, apiTokenInstance)
@@ -28,6 +32,8 @@ function App() {
       }
     } catch {
       setError("Не удалось войти. Проверьте idInstance и apiTokenInstance")
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -36,6 +42,7 @@ function App() {
       {!credentials ? (
         <LoginForm
           error={error}
+          isLoading={isLoading}
           onSubmit={handleLogin}
           onClearError={() => setError("")}
         />

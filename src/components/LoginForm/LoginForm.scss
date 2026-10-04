@@ -1,18 +1,20 @@
 .login-form {
-  align-items: center;
-  background: #fff;
   display: flex;
+  align-items: center;
   justify-content: center;
   gap: 80px;
+
   min-height: 100vh;
   padding: 24px;
+
+  background: #fff;
 
   &__card {
     width: 100%;
     max-width: 500px;
   }
 
-  &__ingo {
+  &__logo {
     width: 220px;
     height: 220px;
     object-fit: contain;
@@ -29,6 +31,12 @@
     }
   }
 
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
   &__field {
     display: flex;
     flex-direction: column;
@@ -40,35 +48,34 @@
     }
 
     input {
+      height: 36px;
+      padding: 0 12px;
+
       background: #0909090d;
       border-radius: 12px;
+
       color: #38414a;
-      height: 36px;
       font-size: 16px;
-      padding: 0 12px;
     }
   }
 
-  &__form {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-
   &__error {
-    color: red;
-    font-size: 13px;
     margin: 0;
     min-height: 16px;
+
+    color: red;
+    font-size: 13px;
     line-height: 16px;
   }
 
   &__button {
+    height: 50px;
+
     background-color: #3b9702;
     border-radius: 100px;
+
     color: #fff;
     font-size: 22px;
-    height: 50px;
 
     &:hover:not(:disabled) {
       background-color: #2d7301;

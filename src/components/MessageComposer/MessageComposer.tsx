@@ -11,13 +11,11 @@ const MessageComposer = ({ onSubmit }: MessageComposerProps) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   const sendMessage = () => {
-    const trimmedMessage = message.trim()
-
-    if (!trimmedMessage) {
+    if (!message.trim()) {
       return
     }
 
-    onSubmit(trimmedMessage)
+    onSubmit(message.trim())
     setMessage("")
 
     if (textareaRef.current) {

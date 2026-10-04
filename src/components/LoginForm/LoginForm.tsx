@@ -5,16 +5,25 @@ import "./LoginForm.scss"
 
 interface LoginFormProps {
   error: string
+  isLoading: boolean
   onClearError: () => void
   onSubmit: (idInstance: string, apiTokenInstance: string) => void
 }
 
-const LoginForm = ({ error, onClearError, onSubmit }: LoginFormProps) => {
+const LoginForm = ({
+  error,
+  isLoading,
+  onClearError,
+  onSubmit,
+}: LoginFormProps) => {
   const [idInstance, setIdInstance] = useState("")
   const [apiTokenInstance, setApiTokenInstance] = useState("")
 
   const isSubmitDisabled =
-    !idInstance.trim() || !apiTokenInstance.trim() || Boolean(error)
+    !idInstance.trim() ||
+    !apiTokenInstance.trim() ||
+    Boolean(error) ||
+    isLoading
 
   const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -62,7 +71,7 @@ const LoginForm = ({ error, onClearError, onSubmit }: LoginFormProps) => {
             type="submit"
             disabled={isSubmitDisabled}
           >
-            Войти
+            {isLoading ? "Проверяем..." : "Войти"}
           </button>
         </form>
       </div>

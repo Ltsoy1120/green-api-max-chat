@@ -3,12 +3,20 @@ import "./PhoneForm.scss"
 
 interface PhoneFormProps {
   error: string
+  isLoading: boolean
   onPhoneChange: () => void
   onSubmit: (phoneNumber: string) => void
 }
 
-const PhoneForm = ({ error, onPhoneChange, onSubmit }: PhoneFormProps) => {
+const PhoneForm = ({
+  error,
+  isLoading,
+  onPhoneChange,
+  onSubmit,
+}: PhoneFormProps) => {
   const [phoneNumber, setPhoneNumber] = useState("")
+
+  const isSubmitDisabled = !phoneNumber.trim() || Boolean(error) || isLoading
 
   const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -34,11 +42,12 @@ const PhoneForm = ({ error, onPhoneChange, onSubmit }: PhoneFormProps) => {
       <button
         className="phone-form__button"
         type="submit"
-        disabled={!phoneNumber.trim()}
+        disabled={isSubmitDisabled}
       >
-        Создать чат
+        {isLoading ? "Проверяем..." : "Создать чат"}
       </button>
     </form>
   )
 }
+
 export default PhoneForm

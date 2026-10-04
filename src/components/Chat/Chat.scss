@@ -31,11 +31,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
     width: 32px;
     height: 32px;
     padding-bottom: 6px;
-    border-radius: 50%;
+
     background: #087eff;
+    border-radius: 50%;
+
     color: #fff;
     font-size: 24px;
     font-weight: 300;
@@ -43,9 +46,11 @@
 
   &__content {
     position: relative;
+
     display: flex;
     flex: 1;
     flex-direction: column;
+
     height: 100vh;
     overflow: hidden;
     background:
@@ -62,6 +67,7 @@
         #0000 100%
       ),
       linear-gradient(28deg, #99d5d7 8.03%, #80bcff 91.51%);
+
     &::before {
       content: "";
       position: absolute;
@@ -80,11 +86,14 @@
   &__header {
     position: relative;
     z-index: 1;
-    flex-shrink: 0;
+
     display: flex;
+    flex-shrink: 0;
     align-items: center;
+
     height: 65px;
     padding: 0 20px;
+
     background: #fff;
     border-bottom: 1px solid #e5e5e5;
   }
@@ -100,11 +109,13 @@
   }
 
   &__item {
-    background: #fff;
     display: block;
+
     height: 82px;
     width: 100%;
     padding: 14px 20px;
+
+    background: #fff;
     text-align: left;
 
     &--active {
@@ -139,13 +150,15 @@
 
   &__back-button {
     display: flex;
+    flex-shrink: 0;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0;
+
     width: 40px;
     height: 40px;
-    padding: 0;
     margin-right: 8px;
+    padding: 0;
+
     background: transparent;
     border: none;
     border-radius: 50%;
